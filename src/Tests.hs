@@ -1,3 +1,8 @@
+module Tests where
+
+import Core
+import Transformers
+
 test1 :: PathMaps
 test1 = [PathMap { pathMapSource = "/tmp/a.txt"
                  , pathMapDest   = "/tmp/a.txt"
@@ -40,5 +45,5 @@ lwjglFiles = [ "macosx/liblwjgl.jnilib"
              , "solaris/liblwjgl.so"
              ]
 
-copyOsLibs name = pathContains name |> forkMap [name ++ "/x86/", name ++ "/x86_64/"] copyTo
+copyOsLibs name = forkMap [name ++ "/x86/", name ++ "/x86_64/"] copyTo . pathContains name
 repackLwjglNatives = forkMap ["macosx", "linux", "windows"] copyOsLibs
